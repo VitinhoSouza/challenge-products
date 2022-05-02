@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Link } from "react-router-dom";
 
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -15,13 +15,18 @@ function App() {
 
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/products" element={<>PRODUCTS</>} />
 
         <Route
           path="*"
           element={
-            <h1 style={{ padding: "1rem" }}>
-              <p>Página não encontrada!</p>
-            </h1>
+            <p style={{ padding: "1rem", background: "#C0C6BE" }}>
+              <h1>Página não encontrada!</h1>
+              <span>
+                Tente acessar as rotas: "<Link to="/register">/register</Link>"
+                para se cadastrar ou "<Link to="/">/</Link>" para fazer login.
+              </span>
+            </p>
           }
         />
       </Routes>

@@ -39,8 +39,8 @@ export default function Login() {
           <input type="submit" value="Entrar" className="buttonSubmit" />
 
           <span className="buttonRegister">
-            Ainda não tem uma conta?
-            <Link to="/register">Cadastre-se</Link>`
+            Não tem uma conta?
+            <Link to="/register">Cadastre-se</Link>
           </span>
         </form>
       </div>
