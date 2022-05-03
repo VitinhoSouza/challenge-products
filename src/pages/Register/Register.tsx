@@ -61,15 +61,6 @@ export default function Register() {
     )
       return false;
 
-    console.log(
-      fullYearActualDate,
-      fullMonthActualDate,
-      fullDayActualDate,
-      actualDate.getFullYear(),
-      actualDate.getMonth() + 1,
-      actualDate.getDate()
-    );
-
     if (fullYearActualDate > actualDate.getFullYear()) return false;
     else if (fullYearActualDate < actualDate.getFullYear()) return true;
     else if (fullMonthActualDate > actualDate.getMonth() + 1) return false;

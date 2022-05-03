@@ -1,3 +1,14 @@
+
+.modalDelete{
+    #modalTextContent{
+        color: black;
+        text-align: center;
+    }
+    #modalFooter-buttons{
+        display: flex;
+        justify-content: center;
+    }
+}
 .applicationHeader{
     height: 15%;
     width: 100%;
@@ -20,15 +31,17 @@
     }
 
     .userInfo{
-        width: 10rem;
-        // background: orange;
+        // width: 12rem;
+        width: 25%;
 
         display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-evenly;
 
         span{
             font-weight: 500;
+            // margin-left: 0.5rem;
+            text-align: center;
         }
 
         img{
@@ -40,6 +53,30 @@
     }
 
     .buttonActions{
+        // width: 60.45rem;
+        width: 75%;
+        height: 100%;
+        // background: aqua;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
 
+        #newBtn{
+            // color: white !important;
+            width: 6rem;
+        }
     }
+}
+
+@media(max-width:600px){
+    .applicationHeader{
+        .dropdownGetout{
+            align-items: initial;
+            margin-top: 1.5rem;
+        }
+        .userInfo{
+            flex-direction: column;
+        }
+    }
+    
 }

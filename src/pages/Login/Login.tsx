@@ -16,7 +16,6 @@ export default function Login() {
 
   async function tryLogin(data: any) {
     const res = await productsAPI.login(data.email, data.password);
-    console.log(res);
     if (res.name === "invalid" || res.name === undefined) {
       alert("Email e/ou senha incorretos.");
     } else {

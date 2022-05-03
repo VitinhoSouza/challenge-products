@@ -1,0 +1,37 @@
+
+.tableFilter-container{
+
+    height: 100%;
+    width: 20rem;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .inputFilter{
+        height: 2.5rem;
+        width: 12rem;
+        border-radius: 1rem;
+        text-align: center;
+
+    }
+    .buttonFilter{
+        font-weight: 500;
+        font-size: 1rem;
+        width: 5rem;
+        height: 2rem;
+        border-radius: 1rem;
+
+        background: white;
+
+        cursor: pointer;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover{
+            background: rgba(0,0,0,0.1)
+        }
+    }
+}

@@ -67,5 +67,21 @@ export const productsAPI = {
         })
 
         return responseData;
+    },
+
+    deleteProduct: async (token:string,idProduct:string) => {
+
+        let response:any;
+
+        await baseProducstAPI.delete(`/produto/${idProduct}`, { headers: { 'Authorization': token}})
+        .then(res => {
+            response = res.data
+        })
+        .catch((e:any) => {
+            console.log(e);
+        })
+
+        return response;
+        
     }
 }

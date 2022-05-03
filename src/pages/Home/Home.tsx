@@ -3,13 +3,16 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Filter from "../../components/Filter/Fiilter";
 
 import Header from "../../components/Header/Header";
 import Pagination from "../../components/Pagination/Pagination";
 import SideMenu from "../../components/SideMenu/SideMenu";
 import { useAuth } from "../../hooks/useAuth";
+import { useProduct } from "../../hooks/useProducts";
 import { productsAPI } from "../../services/productsAPI";
+import formatDate from "../../utils/formatDate";
 
 import "./Home.scss";
 
@@ -24,17 +27,8 @@ interface IProduct {
   qt_vendas: number;
 }
 
-function formatDate(date: Date, locale = "pt-BR") {
-  return new Intl.DateTimeFormat(locale, {
-    dateStyle: "short",
-    timeStyle: "short",
-  })
-    .format(date)
-    .replace(",", "/")
-    .slice(0, 10);
-}
-
 function mountTableItems(products: IProduct[]) {
+  const { setProduct } = useProduct();
   return products.map((product: IProduct) => (
     <tr>
       <th scope="row">{product.id}</th>
@@ -47,7 +41,11 @@ function mountTableItems(products: IProduct[]) {
       <td>R${product.preco.replace(".", ",")}</td>
       <td>{product.qt_estoque}</td>
       <td>{product.qt_vendas}</td>
-      <td>Visualizar produto</td>
+      <td id="linkToViewProduct">
+        <Link to="/viewProduct" onClick={() => setProduct(product)}>
+          Visualizar produto
+        </Link>
+      </td>
     </tr>
   ));
 }
@@ -77,13 +75,11 @@ export default function Home() {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [actualPage, setActualPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  //   const [pageSize, setPageSize] = useState(1);
   const [filter, setFilter] = useState("");
 
   function turnPage(newPage: number) {
     const initial = (newPage - 1) * 15;
     const end = newPage * 15;
-    console.log(allProducts, initial, end);
     setProducts(allProducts.slice(initial, end));
     setActualPage(newPage);
   }
@@ -102,16 +98,12 @@ export default function Home() {
       setProducts([]);
       setActualPage(0);
       setTotalPages(0);
-      //   alert("Não foi possível buscar os produtos");
     }
   }
 
   function handleFilter(newFilter: string) {
     setFilter(newFilter);
     tryGetAllProducts(newFilter);
-    /* if (products.length > 0 || newFilter.length === 0) {
-      
-    } */
   }
 
   useEffect(() => {
@@ -136,21 +128,11 @@ export default function Home() {
         <Header />
         <div className="pageHome-content">
           <div className="tableFilter">
-            <div className="tableFilter-container">
-              <input
-                type="text"
-                className="inputFilter"
-                placeholder="Busque por um produto"
-                value={filter}
-                onChange={(e) => handleFilter(e.target.value)}
-              />
-              <div
-                className="buttonFilter"
-                onClick={() => tryGetAllProducts(filter)}
-              >
-                Buscar
-              </div>
-            </div>
+            <Filter
+              filter={filter}
+              handleFilter={handleFilter}
+              tryGetAllProducts={tryGetAllProducts}
+            />
           </div>
 
           <div className="table-responsive" id="tableContainer">

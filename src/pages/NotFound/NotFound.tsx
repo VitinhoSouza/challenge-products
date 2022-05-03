@@ -1,13 +1,23 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/");
+    }, 4000);
+  });
   return (
-    <p style={{ padding: "1rem", background: "#C0C6BE" }}>
+    <p
+      style={{ textAlign: "center", paddingTop: "5rem", background: "#C0C6BE" }}
+    >
       <h1>Página não encontrada!</h1>
-      <span>
-        Tente acessar as rotas: "<Link to="/register">/register</Link>" para se
-        cadastrar ou "<Link to="/">/</Link>" para fazer login.
-      </span>
+      <span>Aguarde, estamos lhe redirencionando para a página inicial...</span>
+      {/* <span>
+        Tente acessar a rota "<Link to="/">/</Link>" para fazer login.
+      </span> */}
     </p>
   );
 }

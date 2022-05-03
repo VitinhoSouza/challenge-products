@@ -95,9 +95,16 @@
 
             .buttonSubmit{
                 width: 8rem;
-                font-weight: 500;
                 height: 2.3rem;
-                border-radius: 0.5rem;
+
+                font-weight: 500;
+                font-size: 1rem;
+
+                border-radius: 1rem;
+
+                &:hover{
+                    filter: brightness(0.85);
+                }
             }   
             
             .buttonGoLogin{
