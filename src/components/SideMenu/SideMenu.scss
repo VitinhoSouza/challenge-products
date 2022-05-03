@@ -1,0 +1,22 @@
+.sideMenu{
+    background: #01281a;
+    
+    width: 10rem;
+    height: 100%;
+
+}
+
+/* @media(max-width:600px){
+    .sideMenu{
+        width: 7rem;
+        height: 4.65rem;
+        position:absolute;
+    }
+} */
+
+@media(max-width:600px){
+    .sideMenu{
+        position: absolute;
+        visibility:hidden;
+    }
+}

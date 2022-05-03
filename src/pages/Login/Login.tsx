@@ -1,9 +1,8 @@
-/* eslint-disable no-unused-vars */
-// import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-// import { booksAPI } from "../../services/booksAPI";
+import { productsAPI } from "../../services/productsAPI";
 import { useAuth } from "../../hooks/useAuth";
 
 import logoIcon from "../../assets/icon.png";
@@ -15,10 +14,27 @@ export default function Login() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
 
-  function tryLogin(data: any) {
-    alert(JSON.stringify(data));
-    // Fazer a API
+  async function tryLogin(data: any) {
+    const res = await productsAPI.login(data.email, data.password);
+    console.log(res);
+    if (res.name === "invalid" || res.name === undefined) {
+      alert("Email e/ou senha incorretos.");
+    } else {
+      setAuthLS(res);
+      navigate("/products");
+    }
   }
+
+  useEffect(() => {
+    if (
+      auth !== undefined &&
+      auth.token !== "null" &&
+      auth.token !== "null" &&
+      auth.image !== "null"
+    ) {
+      navigate("/products");
+    }
+  }, [auth]);
 
   return (
     <div className="pageLogin">
@@ -38,9 +54,8 @@ export default function Login() {
 
           <input type="submit" value="Entrar" className="buttonSubmit" />
 
-          <span className="buttonRegister">
-            Não tem uma conta?
-            <Link to="/register">Cadastre-se</Link>
+          <span className="buttonGoRegister">
+            Não tem uma conta? <Link to="/register">Cadastre-se</Link>
           </span>
         </form>
       </div>

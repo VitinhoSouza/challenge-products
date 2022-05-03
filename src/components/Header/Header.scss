@@ -1,0 +1,45 @@
+.applicationHeader{
+    height: 15%;
+    width: 100%;
+
+    // background: #013f28;
+    background: #014f32;
+    color: white;
+
+    display: flex;
+    flex-direction: row-reverse;
+
+    .dropdownGetout{
+        height: 100%;
+        width: 4rem;
+
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .userInfo{
+        width: 10rem;
+        // background: orange;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        span{
+            font-weight: 500;
+        }
+
+        img{
+            border-radius: 1rem;
+            width: 2rem;
+            height: 2rem;
+        }
+
+    }
+
+    .buttonActions{
+
+    }
+}

@@ -170,7 +170,7 @@ export default function Register() {
               Senha <input type="password" {...register("password")} />
             </label>
             <label>
-              Sexo
+              Sexo{" "}
               <select {...register("gender")}>
                 <option value="f">Feminino</option>
                 <option value="m">Masculino</option>
@@ -180,9 +180,7 @@ export default function Register() {
               <span> Data de Nascimento</span>
               <input type="date" {...register("date")} />
             </label>
-          </div>
 
-          <div className="addressData">
             <label className="postcode">
               CEP{"  "}
               <input
@@ -249,7 +247,7 @@ export default function Register() {
           <input type="submit" value="Cadastrar-se" className="buttonSubmit" />
 
           <span className="buttonGoLogin">
-            Já tem uma conta?
+            Já tem uma conta?{"  "}
             <Link to="/">Entrar</Link>`
           </span>
         </form>
