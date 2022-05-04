@@ -1,13 +1,6 @@
 /* eslint-disable import/prefer-default-export */
+import { IAddress } from '../utils/interfaces';
 import {basePostcodeAPI} from './api';
-
-interface IAddress {
-    city: string;
-    state: string;
-    publicPlace: string;
-    district: string;
-    complement: string;
-  }
 
 export const postcodeAPI = {
 

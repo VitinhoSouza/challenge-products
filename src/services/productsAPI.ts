@@ -1,6 +1,7 @@
 /* eslint-disable prefer-template */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable import/prefer-default-export */
+import { IProduct } from '../utils/interfaces';
 import {baseProducstAPI} from './api';
 
 
@@ -73,7 +74,7 @@ export const productsAPI = {
 
         let response:any;
 
-        await baseProducstAPI.delete(`/produto/${idProduct}`, { headers: { 'Authorization': token}})
+        await baseProducstAPI.delete(`/produto/${idProduct}`, { headers: { 'Authorization': token}} )
         .then(res => {
             response = res.data
         })
@@ -83,5 +84,21 @@ export const productsAPI = {
 
         return response;
         
-    }
+    },
+
+    createProduct:async (token:string,product:IProduct) => {
+
+        let response:any;
+
+        await baseProducstAPI.post(`/produto`, {product},{ headers: { 'Authorization': token}})
+        .then(res => {
+            response = res.data
+        })
+        .catch((e:any) => {
+            console.log(e);
+        })
+
+        return response;
+        
+    },
 }

@@ -13,19 +13,9 @@ import { useAuth } from "../../hooks/useAuth";
 import { useProduct } from "../../hooks/useProducts";
 import { productsAPI } from "../../services/productsAPI";
 import formatDate from "../../utils/formatDate";
+import { IProduct } from "../../utils/interfaces";
 
 import "./Home.scss";
-
-interface IProduct {
-  avatar: string;
-  createdAt: string;
-  id: string;
-  marca: string;
-  nome: string;
-  preco: string;
-  qt_estoque: number;
-  qt_vendas: number;
-}
 
 function mountTableItems(products: IProduct[]) {
   const { setProduct } = useProduct();

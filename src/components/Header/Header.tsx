@@ -6,17 +6,19 @@
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { useAuth } from "../../hooks/useAuth";
-
-import "./Header.scss";
 import { useProduct } from "../../hooks/useProducts";
 import { productsAPI } from "../../services/productsAPI";
 
+import { useAuth } from "../../hooks/useAuth";
+
+import "./Header.scss";
+
 interface IButtonHeaderProps {
   type: "add" | "edit" | "delete";
+  goToCreateProduct?: () => void;
 }
 
-function ButtonHeader({ type }: IButtonHeaderProps) {
+function ButtonHeader({ type, goToCreateProduct }: IButtonHeaderProps) {
   let textSpan = "";
   let btn = "danger";
   if (type === "add") {
@@ -35,6 +37,7 @@ function ButtonHeader({ type }: IButtonHeaderProps) {
       className={`btn btn-${btn}`}
       data-bs-toggle={type === "delete" ? "modal" : ""}
       data-bs-target={type === "delete" ? "#staticBackdrop" : ""}
+      onClick={type === "add" ? goToCreateProduct : undefined}
     >
       {textSpan} produto
     </button>
@@ -50,6 +53,10 @@ export default function Header() {
   function tryLogout() {
     setAuthLS({ name: null, token: null, image: null });
     navigate("/");
+  }
+
+  function goToCreateProduct() {
+    navigate("/createProduct");
   }
 
   async function tryDeleteProduct() {
@@ -141,7 +148,9 @@ export default function Header() {
         <span>{auth.name}</span>
       </div>
       <div className="buttonActions">
-        {location.pathname === "/products" && <ButtonHeader type="add" />}
+        {location.pathname === "/products" && (
+          <ButtonHeader type="add" goToCreateProduct={goToCreateProduct} />
+        )}
         {location.pathname === "/viewProduct" && (
           <>
             <ButtonHeader type="edit" />

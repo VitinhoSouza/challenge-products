@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { validate } from "gerador-validador-cpf";
+import InputMask from "react-input-mask";
 
+import { IAddress } from "../../utils/interfaces";
 import { postcodeAPI } from "../../services/postcodeAPI";
 import { productsAPI } from "../../services/productsAPI";
 import checkIcon from "../../assets/check.png";
@@ -16,27 +18,27 @@ import crossIcon from "../../assets/cross.png";
 
 import "./Register.scss";
 
-interface IAddress {
-  city: string;
-  state: string;
-  publicPlace: string;
-  district: string;
-  complement: string;
-}
-
 export default function Register() {
   const navigate = useNavigate();
   const { register, handleSubmit } = useForm();
   const [cpf, setCpf] = useState<number>();
   const [cpfIsValid, setCpfIsValid] = useState(false);
-  const [postcode, setpostcode] = useState<number>();
+  const [postcode, setPostcode] = useState<number>();
   const [postcodeIsValid, setPostcodeIsValid] = useState(false);
   const [address, setAddress] = useState<IAddress>({} as IAddress);
 
   function validateCpf(newCpf: number) {
-    if (newCpf.toString().split("").length <= 11) setCpf(newCpf);
-    if (newCpf.toString().split("").length === 11) {
-      if (validate(newCpf.toString())) {
+    const cpfWithMask = newCpf.toString();
+    const cpfWithoutMask = cpfWithMask.replaceAll("-", "").replaceAll(".", "");
+    const cpfWithoutSpace = cpfWithoutMask.replaceAll("_", "");
+
+    if (cpfWithMask.includes("e")) setCpf(0);
+    else if (cpfWithoutSpace.length < 11) {
+      setCpf(newCpf);
+      setCpfIsValid(false);
+    } else if (cpfWithoutSpace.length === 11) {
+      setCpf(newCpf);
+      if (validate(cpfWithoutSpace)) {
         setCpfIsValid(true);
       } else {
         setCpfIsValid(false);
@@ -70,7 +72,13 @@ export default function Register() {
     return true;
   }
 
-  async function validatePostcode(postcodeRequest: number) {
+  async function validatePostcode(newPostcode: number) {
+    const postcodeWithMask = newPostcode.toString();
+    const postcodeWithoutMask = postcodeWithMask
+      .replaceAll("-", "")
+      .replaceAll(".", "");
+    const postcodeWithoutSpace = postcodeWithoutMask.replaceAll("_", "");
+
     const newAddress: IAddress = {
       city: "",
       complement: "",
@@ -78,11 +86,17 @@ export default function Register() {
       district: "",
       publicPlace: "",
     } as IAddress;
-    if (postcodeRequest.toString().split("").length <= 8)
-      setpostcode(postcodeRequest);
-    if (postcodeRequest.toString().split("").length === 8) {
-      const res = await postcodeAPI.getPostcode(postcodeRequest);
-      console.log(res);
+
+    if (postcodeWithMask.includes("e")) setPostcode(0);
+    else if (postcodeWithoutSpace.length <= 8) {
+      setPostcode(newPostcode);
+      setAddress(newAddress);
+      setPostcodeIsValid(false);
+    }
+
+    if (postcodeWithoutSpace.length === 8) {
+      setPostcode(newPostcode);
+      const res = await postcodeAPI.getPostcode(newPostcode);
       if (res.postcodeResponse !== undefined) {
         setAddress(res.objectAddress);
         setPostcodeIsValid(true);
@@ -90,15 +104,14 @@ export default function Register() {
         setAddress(newAddress);
         setPostcodeIsValid(false);
       }
-    } else if (postcodeRequest.toString().split("").length <= 8) {
-      setPostcodeIsValid(false);
-      setAddress(newAddress);
     }
   }
 
   async function tryRegister(data: any) {
-    if (!cpfIsValid || !postcodeIsValid) {
-      alert("Preencha as informações corretamente!");
+    if (!cpfIsValid) {
+      alert("O CPF não é válido!");
+    } else if (!postcodeIsValid) {
+      alert("O CEP não é válido!");
     } else if (!dateIsValid(data.date)) {
       alert("A data de nascimento não está preenchida corretamente!");
     } else {
@@ -112,7 +125,7 @@ export default function Register() {
     }
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     setTimeout(() => {
       alert(
         "- Atenção: nos campos 'CPF' e 'CEP' só são permitidos números (sem caracteres como: '.' e '-' ).\n" +
@@ -121,7 +134,7 @@ export default function Register() {
           "- Atenção: os campos 'Cidade', 'Estado', 'Logradouro', 'Bairro' e 'Complemento' serão carregados somente após a digitação de um CEP válido."
       );
     }, 500);
-  }, []);
+  }, []); */
 
   return (
     <div className="pageRegister">
@@ -140,8 +153,9 @@ export default function Register() {
             </label>
             <label className="cpf">
               CPF{" "}
-              <input
-                type="number"
+              <InputMask
+                className="inputMask"
+                mask="999.999.999-99"
                 {...register("cpf")}
                 value={cpf}
                 onChange={(e: any) => validateCpf(e.target.value)}
@@ -174,11 +188,12 @@ export default function Register() {
 
             <label className="postcode">
               CEP{"  "}
-              <input
-                type="number"
-                {...register("postcode")}
-                onChange={(e: any) => validatePostcode(e.target.value)}
+              <InputMask
+                className="inputMask"
+                mask="99999-999"
+                {...register("cep")}
                 value={postcode}
+                onChange={(e: any) => validatePostcode(e.target.value)}
               />
               <div className="validateValue">
                 {postcodeIsValid ? (

@@ -1,10 +1,10 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
-interface AuthProviderProps {
+interface IAuthProviderProps {
   children: ReactNode;
 }
 
-interface AuthContextData {
+interface IAuthContextData {
   auth: {
     token: string | null;
     name: string | null;
@@ -14,9 +14,9 @@ interface AuthContextData {
   setAuthLS: (newAuth: any) => void;
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
-export function AuthProvider({ children }: AuthProviderProps) {
+export function AuthProvider({ children }: IAuthProviderProps) {
   const [auth, setAuth] = useState({
     token: localStorage.getItem("token"),
     name: localStorage.getItem("name"),

@@ -6,7 +6,8 @@ export default function SideMenu() {
 
   return (
     <nav className="sideMenu">
-      {location.pathname === "/viewProduct" && (
+      {(location.pathname === "/viewProduct" ||
+        location.pathname === "/createProduct") && (
         <div className="goHome">
           <Link to="/products">Voltar para a tela inicial</Link>
         </div>

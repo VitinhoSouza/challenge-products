@@ -2,7 +2,7 @@
 import arrowIcon from "../../assets/arrow.svg";
 import "./Pagination.scss";
 
-interface IPagination {
+interface IPaginationProps {
   actualPage: number;
   totalPages: number;
   tryGetProducts: (page: number) => void;
@@ -12,7 +12,7 @@ export default function Pagination({
   actualPage,
   totalPages,
   tryGetProducts,
-}: IPagination) {
+}: IPaginationProps) {
   return (
     <>
       <button

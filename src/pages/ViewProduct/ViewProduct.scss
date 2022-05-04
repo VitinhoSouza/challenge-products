@@ -34,7 +34,7 @@
 
                 margin-right: auto;
                 margin-left: auto;
-                background: white;
+                border: 1px solid black;
 
                 .infoProducts-header{
                     height: 20%;
@@ -65,7 +65,7 @@
                     .id,.name{
                         >span{
                             font-weight: 400;
-                            background: white;
+                            // background: white;
                             border-radius: 0.8rem;
                             margin-left: 0.5rem;
                         }
