@@ -101,4 +101,20 @@ export const productsAPI = {
         return response;
         
     },
+
+    editProduct:async (token:string,product:IProduct) => {
+
+        let response:any;
+
+        await baseProducstAPI.put(`/produto/${product.id}`, {product},{ headers: { 'Authorization': token}})
+        .then(res => {
+            response = res.data
+        })
+        .catch((e:any) => {
+            console.log(e);
+        })
+
+        return response;
+        
+    },
 }

@@ -1,3 +1,6 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-useless-return */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-else-return */
 /* eslint-disable radix */
@@ -107,14 +110,35 @@ export default function Register() {
     }
   }
 
-  async function tryRegister(data: any) {
-    if (!cpfIsValid) {
-      alert("O CPF não é válido!");
+  function dataIsValid(data: any) {
+    let dataAreFilled = true;
+    let fieldsForValidation = Object.entries(data);
+    fieldsForValidation = fieldsForValidation.slice(0, 8);
+    fieldsForValidation.forEach((field) => {
+      if (typeof field[1] === "string" && field[1].length === 0) {
+        dataAreFilled = false;
+      }
+    });
+
+    if (!dataAreFilled) {
+      alert("Erro: Preencha todos os campos!");
+      return false;
+    } else if (!cpfIsValid) {
+      alert("Erro: O CPF não é válido!");
+      return false;
     } else if (!postcodeIsValid) {
-      alert("O CEP não é válido!");
+      alert("Erro: O CEP não é válido!");
+      return false;
     } else if (!dateIsValid(data.date)) {
-      alert("A data de nascimento não está preenchida corretamente!");
-    } else {
+      alert("Erro: A data de nascimento não está correta!");
+      return false;
+    }
+
+    return true;
+  }
+
+  async function tryRegister(data: any) {
+    if (dataIsValid(data)) {
       const res = await productsAPI.registerUser(data);
       if (res === "invalid") {
         alert("Não foi possível cadastrar o usuário!");

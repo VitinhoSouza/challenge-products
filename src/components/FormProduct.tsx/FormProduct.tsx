@@ -2,24 +2,43 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/require-default-props */
 // import { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { productsAPI } from "../../services/productsAPI";
 // import InputMask from "react-input-mask";
-import { IProduct, IProductCreateOrEdit } from "../../utils/interfaces";
+import { IProduct } from "../../utils/interfaces";
 
 import "./FormProduct.scss";
 
 interface IFormProductProps {
-  product?: IProduct;
+  productProps?: IProduct;
 }
 
-export default function FormProduct({ product }: IFormProductProps) {
-  const { register, handleSubmit } = useForm();
-
+export default function FormProduct({ productProps }: IFormProductProps) {
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const { register, handleSubmit } = useForm();
+
+  const [nome, setNome] = useState(
+    productProps === undefined ? "" : productProps.nome
+  );
+  const [avatar, setAvatar] = useState(
+    productProps === undefined ? "" : productProps.avatar
+  );
+  const [marca, setMarca] = useState(
+    productProps === undefined ? "" : productProps.marca
+  );
+  const [preco, setPreco] = useState(
+    productProps === undefined ? "" : productProps.preco
+  );
+  const [estoque, setEstoque] = useState(
+    productProps === undefined ? "" : productProps.qt_estoque
+  );
+  const [vendas, setVendas] = useState(
+    productProps === undefined ? "" : productProps.qt_vendas
+  );
 
   //   const [price, setPrice] = useState<number>(0);
 
@@ -39,14 +58,14 @@ export default function FormProduct({ product }: IFormProductProps) {
   //     // }
   //   }
 
-  function validateProductData(data: IProductCreateOrEdit) {
+  function validateProductData(data: IProduct) {
     if (
       data.avatar.length === 0 ||
       data.nome.length === 0 ||
       data.marca.length === 0 ||
       data.preco.length === 0 ||
-      data.qt_estoque.length === 0 ||
-      data.qt_vendas.length === 0
+      data.qt_estoque.toString().split("").length === 0 ||
+      data.qt_vendas.toString().split("").length === 0
     ) {
       alert("Erro! Todos os campos são obrigatórios!");
       return false;
@@ -54,8 +73,8 @@ export default function FormProduct({ product }: IFormProductProps) {
 
     if (
       data.preco.includes("e") ||
-      data.qt_estoque.includes("e") ||
-      data.qt_vendas.includes("e")
+      data.qt_estoque.toString().split("").includes("e") ||
+      data.qt_vendas.toString().split("").includes("e")
     ) {
       alert(
         "Erro! Certifique-se que os campos 'Preço','Estoque' e 'Vendas' não estão com o caractere 'e' ou 'E'!"
@@ -67,25 +86,39 @@ export default function FormProduct({ product }: IFormProductProps) {
   }
 
   async function tryEdit(data: any) {
-    alert(data);
-  }
-
-  async function tryCreate(data: any) {
-    console.log(data);
-
     let token = "";
     if (auth.token !== null) token = auth.token;
 
-    const newData = data;
-    let res;
     if (validateProductData(data)) {
-      newData.createdAt = new Date();
-      newData.id = Math.floor(Math.random() * 1000);
-      res = await productsAPI.createProduct(token, newData);
+      const newData = data;
+      newData.createdAt = productProps?.createdAt;
+      newData.id = productProps?.id;
+      const res = await productsAPI.editProduct(token, newData);
 
       if (res !== undefined) {
-        alert("Produto cadastrado com sucesso!");
+        alert("O produto foi editado!");
         navigate("/products");
+      } else {
+        alert("Atenção: Houve um erro ao editar o produto!");
+      }
+    }
+  }
+
+  async function tryCreate(data: any) {
+    let token = "";
+    if (auth.token !== null) token = auth.token;
+
+    if (validateProductData(data)) {
+      const newData = data;
+      newData.createdAt = new Date();
+      newData.id = Math.floor(Math.random() * 1000);
+      const res = await productsAPI.createProduct(token, newData);
+
+      if (res !== undefined) {
+        alert("O produto foi cadastrado!");
+        navigate("/products");
+      } else {
+        alert("Atenção: Houve um erro ao cadastrar o produto!");
       }
     }
   }
@@ -99,36 +132,60 @@ export default function FormProduct({ product }: IFormProductProps) {
     <div className="formProduct-container">
       <div className="titleFormProduct">
         <span>
-          {product === undefined
-            ? "Adicione um novo produto"
-            : `Edite o produto de Id #${product.id}`}
+          {productProps === undefined
+            ? "Cadastre um novo produto"
+            : `Edite o produto de Id #${productProps.id}`}
         </span>
       </div>
 
       <form
         onSubmit={
-          product === undefined
+          productProps === undefined
             ? handleSubmit(tryCreate)
             : handleSubmit(tryEdit)
         }
       >
         <label className="labelAvatar">
-          Avatar
-          <input
+          Avatar (URL)
+          {/* <input
             type="file"
             accept=".jpg,.png,svg,.gif,.apng,.webp"
             {...register("avatar")}
+          /> */}
+          <input
+            type="text"
+            {...register("avatar")}
+            value={avatar}
+            onChange={(e: any) => setAvatar(e.target.value)}
           />
         </label>
         <label>
-          Nome <input type="text" {...register("nome")} />
+          Nome{" "}
+          <input
+            type="text"
+            {...register("nome")}
+            value={nome}
+            onChange={(e: any) => setNome(e.target.value)}
+          />
         </label>
         <label>
-          Marca <input type="text" {...register("marca")} />
+          Marca{" "}
+          <input
+            type="text"
+            {...register("marca")}
+            value={marca}
+            onChange={(e: any) => setMarca(e.target.value)}
+          />
         </label>
         <label className="moneySymbol">
           <span>R$</span>
-          Preço <input type="number" {...register("preco")} />
+          Preço{" "}
+          <input
+            type="number"
+            {...register("preco")}
+            value={preco}
+            onChange={(e: any) => setPreco(e.target.value)}
+          />
           {/* <InputMask
             mask="99,99"
             value={price}
@@ -136,16 +193,30 @@ export default function FormProduct({ product }: IFormProductProps) {
           ></InputMask> */}
         </label>
         <label>
-          Estoque <input type="number" {...register("qt_estoque")} />
+          Estoque{" "}
+          <input
+            type="number"
+            {...register("qt_estoque")}
+            value={estoque}
+            onChange={(e: any) => setEstoque(e.target.value)}
+          />
         </label>
         <label>
-          Vendas <input type="number" {...register("qt_vendas")} />
+          Vendas{" "}
+          <input
+            type="number"
+            {...register("qt_vendas")}
+            value={vendas}
+            onChange={(e: any) => setVendas(e.target.value)}
+          />
         </label>
 
         <input
           type="submit"
           className="btn btn-primary"
-          value={product === undefined ? "Adicionar produto" : "Editar produto"}
+          value={
+            productProps === undefined ? "Cadastrar produto" : "Editar produto"
+          }
         />
       </form>
     </div>

@@ -6,6 +6,7 @@ import Home from "./pages/Home/Home";
 import ViewProduct from "./pages/ViewProduct/ViewProduct";
 import NotFound from "./pages/NotFound/NotFound";
 import CreateProduct from "./pages/CreateProduct/CreateProduct";
+import EditProduct from "./pages/EditProduct/EditProduct";
 
 import { AuthProvider } from "./hooks/useAuth";
 import { ProductProvider } from "./hooks/useProducts";
@@ -23,6 +24,7 @@ function App() {
             <Route path="/products" element={<Home />} />
             <Route path="/viewProduct" element={<ViewProduct />} />
             <Route path="/createProduct" element={<CreateProduct />} />
+            <Route path="/editProduct" element={<EditProduct />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

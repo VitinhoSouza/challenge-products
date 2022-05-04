@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/jsx-no-bind */
@@ -16,13 +17,18 @@ import "./Header.scss";
 interface IButtonHeaderProps {
   type: "add" | "edit" | "delete";
   goToCreateProduct?: () => void;
+  goToEditProduct?: () => void;
 }
 
-function ButtonHeader({ type, goToCreateProduct }: IButtonHeaderProps) {
+function ButtonHeader({
+  type,
+  goToCreateProduct,
+  goToEditProduct,
+}: IButtonHeaderProps) {
   let textSpan = "";
   let btn = "danger";
   if (type === "add") {
-    textSpan = "Adicionar";
+    textSpan = "Cadastrar";
     btn = "primary";
   } else if (type === "edit") {
     textSpan = "Editar";
@@ -37,7 +43,13 @@ function ButtonHeader({ type, goToCreateProduct }: IButtonHeaderProps) {
       className={`btn btn-${btn}`}
       data-bs-toggle={type === "delete" ? "modal" : ""}
       data-bs-target={type === "delete" ? "#staticBackdrop" : ""}
-      onClick={type === "add" ? goToCreateProduct : undefined}
+      onClick={
+        type === "add"
+          ? goToCreateProduct
+          : type === "edit"
+          ? goToEditProduct
+          : undefined
+      }
     >
       {textSpan} produto
     </button>
@@ -53,6 +65,10 @@ export default function Header() {
   function tryLogout() {
     setAuthLS({ name: null, token: null, image: null });
     navigate("/");
+  }
+
+  function goToEditProduct() {
+    navigate("/editProduct");
   }
 
   function goToCreateProduct() {
@@ -153,7 +169,7 @@ export default function Header() {
         )}
         {location.pathname === "/viewProduct" && (
           <>
-            <ButtonHeader type="edit" />
+            <ButtonHeader type="edit" goToEditProduct={goToEditProduct} />
             <ButtonHeader type="delete" />
           </>
         )}

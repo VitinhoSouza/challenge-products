@@ -3,9 +3,8 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter/Fiilter";
-
 import Header from "../../components/Header/Header";
 import Pagination from "../../components/Pagination/Pagination";
 import SideMenu from "../../components/SideMenu/SideMenu";
@@ -18,9 +17,10 @@ import { IProduct } from "../../utils/interfaces";
 import "./Home.scss";
 
 function mountTableItems(products: IProduct[]) {
+  const navigate = useNavigate();
   const { setProduct } = useProduct();
   return products.map((product: IProduct) => (
-    <tr>
+    <tr key={product.id}>
       <th scope="row">{product.id}</th>
       <td className="tdAvatar">
         <img src={product.avatar} alt="avatar" />
@@ -32,9 +32,16 @@ function mountTableItems(products: IProduct[]) {
       <td>{product.qt_estoque}</td>
       <td>{product.qt_vendas}</td>
       <td id="linkToViewProduct">
-        <Link to="/viewProduct" onClick={() => setProduct(product)}>
-          Visualizar produto
-        </Link>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={() => {
+            setProduct(product);
+            navigate("/viewProduct");
+          }}
+        >
+          Visualizar
+        </button>
       </td>
     </tr>
   ));

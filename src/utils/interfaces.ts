@@ -9,15 +9,6 @@ export interface IProduct {
   qt_vendas: number;
 }
 
-export interface IProductCreateOrEdit {
-  avatar: string;
-  marca: string;
-  nome: string;
-  preco: string;
-  qt_estoque: string;
-  qt_vendas: string;
-}
-
 export interface IAddress {
   city: string;
   state: string;
