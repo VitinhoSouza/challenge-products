@@ -6,6 +6,7 @@ import { productsAPI } from "../../services/productsAPI";
 import { useAuth } from "../../hooks/useAuth";
 
 import "./Header.scss";
+import { showAlert } from "../../utils/alert";
 
 interface IButtonHeaderProps {
   type: "add" | "edit" | "delete";
@@ -73,10 +74,10 @@ export default function Header() {
     if (auth.token !== null) token = auth.token;
     const res = await productsAPI.deleteProduct(token, product.id);
     if (res !== undefined) {
-      alert("O produto foi deletado!");
+      showAlert("success", "O produto foi deletado.");
       navigate("/products");
     } else {
-      alert("Atenção: Houve um erro ao deletar o produto!");
+      showAlert("error", "Houve um erro ao deletar o produto!");
     }
   }
 
@@ -85,16 +86,13 @@ export default function Header() {
       <div className="modalDelete">
         <div className="modal-dialog modal-dialog-centered">
           <div
-            className="modal fade" //
+            className="modal fade"
             id="staticBackdrop"
             data-bs-backdrop="static"
             data-bs-keyboard="false"
             tabIndex={-1}
             aria-labelledby="staticBackdropLabel"
-            aria-hidden="true" //
-            /* style={{ display: "block" }} */
-            /* aria-modal="true" */
-            /* role="dialog" */
+            aria-hidden="true"
           >
             <div className="modal-dialog" id="modalTextContent">
               <div className="modal-content">

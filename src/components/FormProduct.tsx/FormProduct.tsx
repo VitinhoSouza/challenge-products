@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { productsAPI } from "../../services/productsAPI";
+import { showAlert } from "../../utils/alert";
 import { IProduct } from "../../utils/interfaces";
 
 import "./FormProduct.scss";
@@ -33,24 +34,6 @@ export default function FormProduct({ productProps }: IFormProductProps) {
     productProps === undefined ? "" : productProps.qt_vendas
   );
 
-  //   const [price, setPrice] = useState<number>(0);
-
-  //   function validatePrice(newPrice: string) {
-  //     console.log("É ISSO", newPrice);
-  //     if (newPrice.includes("e")) setPrice(0);
-  //     else if (Number.isInteger(parseFloat(newPrice))) {
-  //       console.log("É inteiro", parseFloat(newPrice));
-  //       setPrice(parseFloat(newPrice));
-  //     } else {
-  //       console.log("É quebrado", parseFloat(newPrice) * 1000);
-  //       setPrice(parseFloat(newPrice) * 1000);
-  //     }
-  //     // else {
-  //     //   console.log("TRANSFORMANDO ISSO", parseFloat(newPrice));
-  //     //   setPrice(parseFloat(newPrice));
-  //     // }
-  //   }
-
   function validateProductData(data: IProduct, isEdition = false) {
     if (
       (data.avatar.length === 0 && !isEdition) ||
@@ -60,7 +43,7 @@ export default function FormProduct({ productProps }: IFormProductProps) {
       data.qt_estoque.toString().split("").length === 0 ||
       data.qt_vendas.toString().split("").length === 0
     ) {
-      alert("Erro! Todos os campos são obrigatórios!");
+      showAlert("error", "Todos os campos são obrigatórios!");
       return false;
     }
 
@@ -69,8 +52,9 @@ export default function FormProduct({ productProps }: IFormProductProps) {
       data.qt_estoque.toString().split("").includes("e") ||
       data.qt_vendas.toString().split("").includes("e")
     ) {
-      alert(
-        "Erro! Certifique-se que os campos 'Preço','Estoque' e 'Vendas' não estão com o caractere 'e' ou 'E'!"
+      showAlert(
+        "error",
+        "Certifique-se que os campos 'Preço','Estoque' e 'Vendas' não estão com o caractere 'e' ou 'E'!"
       );
       return false;
     }
@@ -89,10 +73,10 @@ export default function FormProduct({ productProps }: IFormProductProps) {
       const res = await productsAPI.editProduct(token, newData);
 
       if (res !== undefined) {
-        alert("O produto foi editado!");
+        showAlert("success", "O produto foi editado.");
         navigate("/products");
       } else {
-        alert("Atenção: Houve um erro ao editar o produto!");
+        showAlert("error", "Houve um erro ao editar o produto!");
       }
     }
   }
@@ -108,22 +92,18 @@ export default function FormProduct({ productProps }: IFormProductProps) {
       const res = await productsAPI.createProduct(token, newData);
 
       if (res !== undefined) {
-        alert("O produto foi cadastrado!");
+        showAlert("success", "O produto foi cadastrado.");
         navigate("/products");
       } else {
-        alert("Atenção: Houve um erro ao cadastrar o produto!");
+        showAlert("error", "Houve um erro ao cadastrar o produto!");
       }
     }
   }
 
-  /* function handlePrice(value: number) {
-    console.log("OIA", value);
-    setPrice(value);
-  } */
-
   useEffect(() => {
     if (productProps !== undefined) {
-      alert(
+      showAlert(
+        "warning",
         "Atenção: caso não seja adicionada nenhuma imagem, o avatar continuará o mesmo!"
       );
     }
@@ -153,12 +133,6 @@ export default function FormProduct({ productProps }: IFormProductProps) {
             accept=".jpg,.png,svg,.gif,.apng,.webp"
             {...register("avatar")}
           />
-          {/* <input
-            type="text"
-            {...register("avatar")}
-            value={avatar}
-            onChange={(e: any) => setAvatar(e.target.value)}
-          /> */}
         </label>
         <label>
           Nome{" "}
@@ -187,11 +161,6 @@ export default function FormProduct({ productProps }: IFormProductProps) {
             value={preco}
             onChange={(e: any) => setPreco(e.target.value)}
           />
-          {/* <InputMask
-            mask="99,99"
-            value={price}
-            onChange={(e) => handlePrice(parseInt(e.target.value))}
-          ></InputMask> */}
         </label>
         <label>
           Estoque{" "}

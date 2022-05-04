@@ -8,6 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import logoIcon from "../../assets/icon.png";
 
 import "./Login.scss";
+import { showAlert } from "../../utils/alert";
 
 export default function Login() {
   const { auth, setAuthLS } = useAuth();
@@ -17,8 +18,9 @@ export default function Login() {
   async function tryLogin(data: any) {
     const res = await productsAPI.login(data.email, data.password);
     if (res.name === "invalid" || res.name === "undefined undefined") {
-      alert("Email e/ou senha incorretos.");
+      showAlert("error", "Email e/ou senha incorretos!");
     } else {
+      showAlert("success", "Login realizado.");
       setAuthLS(res);
       navigate("/products");
     }

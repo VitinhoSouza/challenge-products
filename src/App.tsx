@@ -1,4 +1,5 @@
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -11,6 +12,7 @@ import EditProduct from "./pages/EditProduct/EditProduct";
 import { AuthProvider } from "./hooks/useAuth";
 import { ProductProvider } from "./hooks/useProducts";
 
+import "react-toastify/dist/ReactToastify.css";
 import "./App.scss";
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
     <AuthProvider>
       <ProductProvider>
         <BrowserRouter>
+          <ToastContainer autoClose={3000} />
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

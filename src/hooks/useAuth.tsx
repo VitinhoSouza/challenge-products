@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createContext, ReactNode, useContext, useState } from "react";
 
 interface IAuthProviderProps {

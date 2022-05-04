@@ -11,6 +11,7 @@ import checkIcon from "../../assets/check.png";
 import crossIcon from "../../assets/cross.png";
 
 import "./Register.scss";
+import { showAlert } from "../../utils/alert";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -112,16 +113,16 @@ export default function Register() {
     });
 
     if (!dataAreFilled) {
-      alert("Erro: Preencha todos os campos!");
+      showAlert("error", "Preencha todos os campos!");
       return false;
     } else if (!cpfIsValid) {
-      alert("Erro: O CPF não é válido!");
+      showAlert("error", "O CPF não é válido!");
       return false;
     } else if (!postcodeIsValid) {
-      alert("Erro: O CEP não é válido!");
+      showAlert("error", "O CEP não é válido!");
       return false;
     } else if (!dateIsValid(data.date)) {
-      alert("Erro: A data de nascimento não está correta!");
+      showAlert("error", "A data de nascimento não está correta!");
       return false;
     }
 
@@ -132,9 +133,9 @@ export default function Register() {
     if (dataIsValid(data)) {
       const res = await productsAPI.registerUser(data);
       if (res === "invalid") {
-        alert("Não foi possível cadastrar o usuário!");
+        showAlert("error", "Houve um erro ao cadastrar o usuário!");
       } else {
-        alert("Usuário cadastrado com sucesso!");
+        showAlert("success", "O usuário foi cadastrado.");
         navigate("/login");
       }
     }
@@ -253,8 +254,6 @@ export default function Register() {
               />
             </label>
           </div>
-
-          {/* <input type="submit" value="Cadastrar-se" className="buttonSubmit" /> */}
 
           <div className="buttons">
             <input

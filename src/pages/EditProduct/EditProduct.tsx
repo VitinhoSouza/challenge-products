@@ -11,17 +11,6 @@ export default function EditProduct() {
   const { product } = useProduct();
   const navigate = useNavigate();
 
-  /* let productToBeViewed: IProduct = {
-    avatar: "",
-    createdAt: new Date().toString(),
-    id: "",
-    marca: "",
-    nome: "",
-    preco: "",
-    qt_estoque: 0,
-    qt_vendas: 0,
-  }; */
-
   const [id] = useState(product.id === undefined ? "" : product.id);
   const [nome] = useState(product.nome === undefined ? "" : product.nome);
   const [avatar] = useState(product.avatar === undefined ? "" : product.avatar);
