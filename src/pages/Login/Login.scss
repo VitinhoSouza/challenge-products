@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #C0C6BE;
+    background: #207567;
 
     .content{
 
@@ -16,11 +16,12 @@
         justify-content: center;
         align-items: center;
 
-        background: #6B6C6B;
-        color: white;
+        background: #edf7f6;
+        color: black;
 
         width: 20rem;
         height: 20rem;
+        border-radius: 1rem;
 
         .title{
             display: flex;
@@ -55,24 +56,14 @@
                 input{
                     text-align: center;
                 }
-            }
-
-            .buttonSubmit{
-                font-weight: 500;
-                font-size: 1rem;
-                width: 5rem;
-                height: 2.2rem;
-                border-radius: 1rem;
-
-                &:hover{
-                    filter: brightness(0.85);
-                }
-            }   
+            }  
             
             .buttonGoRegister{
 
                 a{
-                    color: white;
+                    color: #00006f;
+                    font-weight: 600;
+                    text-decoration: none;
                 }
             }
         }

@@ -1,13 +1,9 @@
-/* eslint-disable radix */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable react/require-default-props */
-// import { useState } from "react";
-import { useState } from "react";
+/* eslint-disable jsx-a11y/alt-text */
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { productsAPI } from "../../services/productsAPI";
-// import InputMask from "react-input-mask";
 import { IProduct } from "../../utils/interfaces";
 
 import "./FormProduct.scss";
@@ -23,9 +19,6 @@ export default function FormProduct({ productProps }: IFormProductProps) {
 
   const [nome, setNome] = useState(
     productProps === undefined ? "" : productProps.nome
-  );
-  const [avatar, setAvatar] = useState(
-    productProps === undefined ? "" : productProps.avatar
   );
   const [marca, setMarca] = useState(
     productProps === undefined ? "" : productProps.marca
@@ -58,9 +51,9 @@ export default function FormProduct({ productProps }: IFormProductProps) {
   //     // }
   //   }
 
-  function validateProductData(data: IProduct) {
+  function validateProductData(data: IProduct, isEdition = false) {
     if (
-      data.avatar.length === 0 ||
+      (data.avatar.length === 0 && !isEdition) ||
       data.nome.length === 0 ||
       data.marca.length === 0 ||
       data.preco.length === 0 ||
@@ -89,7 +82,7 @@ export default function FormProduct({ productProps }: IFormProductProps) {
     let token = "";
     if (auth.token !== null) token = auth.token;
 
-    if (validateProductData(data)) {
+    if (validateProductData(data, true)) {
       const newData = data;
       newData.createdAt = productProps?.createdAt;
       newData.id = productProps?.id;
@@ -128,6 +121,14 @@ export default function FormProduct({ productProps }: IFormProductProps) {
     setPrice(value);
   } */
 
+  useEffect(() => {
+    if (productProps !== undefined) {
+      alert(
+        "Atenção: caso não seja adicionada nenhuma imagem, o avatar continuará o mesmo!"
+      );
+    }
+  }, []);
+
   return (
     <div className="formProduct-container">
       <div className="titleFormProduct">
@@ -146,18 +147,18 @@ export default function FormProduct({ productProps }: IFormProductProps) {
         }
       >
         <label className="labelAvatar">
-          Avatar (URL)
-          {/* <input
+          Avatar
+          <input
             type="file"
             accept=".jpg,.png,svg,.gif,.apng,.webp"
             {...register("avatar")}
-          /> */}
-          <input
+          />
+          {/* <input
             type="text"
             {...register("avatar")}
             value={avatar}
             onChange={(e: any) => setAvatar(e.target.value)}
-          />
+          /> */}
         </label>
         <label>
           Nome{" "}

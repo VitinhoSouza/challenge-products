@@ -10,7 +10,6 @@ interface IAuthContextData {
     name: string | null;
     image: string | null;
   };
-  // eslint-disable-next-line no-unused-vars
   setAuthLS: (newAuth: any) => void;
 }
 

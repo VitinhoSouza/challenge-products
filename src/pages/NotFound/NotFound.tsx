@@ -6,18 +6,15 @@ export default function () {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("/");
+      navigate("/login");
     }, 4000);
   });
   return (
     <p
-      style={{ textAlign: "center", paddingTop: "5rem", background: "#C0C6BE" }}
+      style={{ textAlign: "center", paddingTop: "5rem", background: "#edf7f6" }}
     >
       <h1>Página não encontrada!</h1>
       <span>Aguarde, estamos lhe redirencionando para a página inicial...</span>
-      {/* <span>
-        Tente acessar a rota "<Link to="/">/</Link>" para fazer login.
-      </span> */}
     </p>
   );
 }

@@ -13,8 +13,7 @@
     height: 15%;
     width: 100%;
 
-    // background: #013f28;
-    background: #014f32;
+    background: #207567;
     color: white;
 
     display: flex;
@@ -53,17 +52,15 @@
     }
 
     .buttonActions{
-        // width: 60.45rem;
-        width: 75%;
+        width: 60%;
         height: 100%;
-        // background: aqua;
         display: flex;
-        justify-content: space-evenly;
+        justify-content: flex-start;
         align-items: center;
 
+
         #newBtn{
-            // color: white !important;
-            width: 6rem;
+            margin-left: 1rem;
         }
     }
 }

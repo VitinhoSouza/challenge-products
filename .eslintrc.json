@@ -29,6 +29,15 @@
         "import/extensions":"off",
         "import/no-unresolved":"off",
         "jsx-a11y/label-has-associated-control":"off",
-        "react/jsx-props-no-spreading":"off"
+        "react/jsx-props-no-spreading":"off",
+        "react/require-default-props":"off",
+        "react/jsx-no-bind":"off",
+        "jsx-a11y/control-has-associated-label":"off",
+        "import/prefer-default-export":"off",
+        "prefer-template":"off",
+        "no-restricted-globals":"off",
+        "no-else-return":"off",
+        "radix":"off",
+        "no-nested-ternary":"off"
     }
 }

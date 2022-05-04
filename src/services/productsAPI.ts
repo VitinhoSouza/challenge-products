@@ -1,6 +1,3 @@
-/* eslint-disable prefer-template */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable import/prefer-default-export */
 import { IProduct } from '../utils/interfaces';
 import {baseProducstAPI} from './api';
 

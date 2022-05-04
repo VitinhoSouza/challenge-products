@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { IAddress } from '../utils/interfaces';
 import {basePostcodeAPI} from './api';
 

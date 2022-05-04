@@ -1,7 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Filter from "../../components/Filter/Fiilter";
@@ -37,7 +33,7 @@ function mountTableItems(products: IProduct[]) {
           className="btn btn-secondary"
           onClick={() => {
             setProduct(product);
-            navigate("/viewProduct");
+            navigate("/products/" + product.id);
           }}
         >
           Visualizar
@@ -108,7 +104,7 @@ export default function Home() {
       auth !== undefined &&
       (auth.token === "null" || auth.token === "null" || auth.image === "null")
     ) {
-      navigate("/");
+      navigate("/login");
     }
   }, [auth]);
 
@@ -125,11 +121,7 @@ export default function Home() {
         <Header />
         <div className="pageHome-content">
           <div className="tableFilter">
-            <Filter
-              filter={filter}
-              handleFilter={handleFilter}
-              tryGetAllProducts={tryGetAllProducts}
-            />
+            <Filter filter={filter} handleFilter={handleFilter} />
           </div>
 
           <div className="table-responsive" id="tableContainer">

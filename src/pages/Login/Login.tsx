@@ -16,7 +16,7 @@ export default function Login() {
 
   async function tryLogin(data: any) {
     const res = await productsAPI.login(data.email, data.password);
-    if (res.name === "invalid" || res.name === undefined) {
+    if (res.name === "invalid" || res.name === "undefined undefined") {
       alert("Email e/ou senha incorretos.");
     } else {
       setAuthLS(res);
@@ -51,10 +51,11 @@ export default function Login() {
             Senha <input type="password" {...register("password")} />
           </label>
 
-          <input type="submit" value="Entrar" className="buttonSubmit" />
+          {/* <input type="submit" value="Entrar" className="buttonSubmit" /> */}
+          <input type="submit" className="btn btn-primary" value="Entrar" />
 
           <span className="buttonGoRegister">
-            Não tem uma conta? <Link to="/register">Cadastre-se</Link>
+            Não tem conta? <Link to="/register">Cadastre-se</Link>
           </span>
         </form>
       </div>

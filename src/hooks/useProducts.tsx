@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { createContext, ReactNode, useContext, useState } from "react";
 import { IProduct } from "../utils/interfaces";
 
@@ -7,7 +8,6 @@ interface IProductProviderProps {
 
 interface IProductContextData {
   product: IProduct;
-  // eslint-disable-next-line no-unused-vars
   setProduct: (newProduct: IProduct) => void;
 }
 

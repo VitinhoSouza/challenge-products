@@ -19,12 +19,12 @@ function App() {
       <ProductProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/products" element={<Home />} />
-            <Route path="/viewProduct" element={<ViewProduct />} />
-            <Route path="/createProduct" element={<CreateProduct />} />
-            <Route path="/editProduct" element={<EditProduct />} />
+            <Route path="/products/:id" element={<ViewProduct />} />
+            <Route path="/products/create" element={<CreateProduct />} />
+            <Route path="/products/:id/edit" element={<EditProduct />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

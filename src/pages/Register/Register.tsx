@@ -1,13 +1,4 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-useless-return */
-/* eslint-disable array-callback-return */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable no-else-return */
-/* eslint-disable radix */
-/* eslint-disable no-unsafe-optional-chaining */
-/* eslint-disable prefer-template */
-/* eslint-disable no-unused-vars */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { validate } from "gerador-validador-cpf";
@@ -144,21 +135,10 @@ export default function Register() {
         alert("Não foi possível cadastrar o usuário!");
       } else {
         alert("Usuário cadastrado com sucesso!");
-        navigate("/");
+        navigate("/login");
       }
     }
   }
-
-  /* useEffect(() => {
-    setTimeout(() => {
-      alert(
-        "- Atenção: nos campos 'CPF' e 'CEP' só são permitidos números (sem caracteres como: '.' e '-' ).\n" +
-          "Para um CPF que é '123.456.789-00', digite '12345678900'.\n" +
-          "Para um CEP que é '12345-678', digite '12345678'.\n\n" +
-          "- Atenção: os campos 'Cidade', 'Estado', 'Logradouro', 'Bairro' e 'Complemento' serão carregados somente após a digitação de um CEP válido."
-      );
-    }, 500);
-  }, []); */
 
   return (
     <div className="pageRegister">
@@ -274,12 +254,20 @@ export default function Register() {
             </label>
           </div>
 
-          <input type="submit" value="Cadastrar-se" className="buttonSubmit" />
+          {/* <input type="submit" value="Cadastrar-se" className="buttonSubmit" /> */}
 
-          <span className="buttonGoLogin">
-            Já tem uma conta?{"  "}
-            <Link to="/">Entrar</Link>`
-          </span>
+          <div className="buttons">
+            <input
+              type="submit"
+              className="btn btn-primary"
+              value="Cadastrar-se"
+            />
+
+            <span className="buttonGoLogin">
+              Já tem uma conta?{"  "}
+              <Link to="/login">Faça login</Link>
+            </span>
+          </div>
         </form>
       </div>
     </div>

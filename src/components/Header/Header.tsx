@@ -1,10 +1,3 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable react/require-default-props */
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { useProduct } from "../../hooks/useProducts";
@@ -64,15 +57,15 @@ export default function Header() {
 
   function tryLogout() {
     setAuthLS({ name: null, token: null, image: null });
-    navigate("/");
+    navigate("/login");
   }
 
   function goToEditProduct() {
-    navigate("/editProduct");
+    navigate("/products/" + product.id + "/edit");
   }
 
   function goToCreateProduct() {
-    navigate("/createProduct");
+    navigate("/products/create");
   }
 
   async function tryDeleteProduct() {
@@ -152,7 +145,7 @@ export default function Header() {
           ></button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-              <a className="dropdown-item" href="/" onClick={tryLogout}>
+              <a className="dropdown-item" href="/login" onClick={tryLogout}>
                 Sair
               </a>
             </li>
@@ -167,12 +160,14 @@ export default function Header() {
         {location.pathname === "/products" && (
           <ButtonHeader type="add" goToCreateProduct={goToCreateProduct} />
         )}
-        {location.pathname === "/viewProduct" && (
-          <>
-            <ButtonHeader type="edit" goToEditProduct={goToEditProduct} />
-            <ButtonHeader type="delete" />
-          </>
-        )}
+        {location.pathname !== "/products" &&
+          !location.pathname.includes("/edit") &&
+          location.pathname !== "/products/create" && (
+            <>
+              <ButtonHeader type="edit" goToEditProduct={goToEditProduct} />
+              <ButtonHeader type="delete" />
+            </>
+          )}
       </div>
     </nav>
   );
