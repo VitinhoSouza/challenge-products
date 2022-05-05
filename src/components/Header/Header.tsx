@@ -58,7 +58,7 @@ export default function Header() {
 
   function tryLogout() {
     setAuthLS({ name: null, token: null, image: null });
-    navigate("/login");
+    navigate("/");
   }
 
   function goToEditProduct() {
@@ -143,7 +143,7 @@ export default function Header() {
           ></button>
           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li>
-              <a className="dropdown-item" href="/login" onClick={tryLogout}>
+              <a className="dropdown-item" href="/" onClick={tryLogout}>
                 Sair
               </a>
             </li>

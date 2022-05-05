@@ -136,7 +136,7 @@ export default function Register() {
         showAlert("error", "Houve um erro ao cadastrar o usuário!");
       } else {
         showAlert("success", "O usuário foi cadastrado.");
-        navigate("/login");
+        navigate("/");
       }
     }
   }
@@ -264,7 +264,7 @@ export default function Register() {
 
             <span className="buttonGoLogin">
               Já tem uma conta?{"  "}
-              <Link to="/login">Faça login</Link>
+              <Link to="/">Faça login</Link>
             </span>
           </div>
         </form>

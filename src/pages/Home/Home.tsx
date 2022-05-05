@@ -104,7 +104,7 @@ export default function Home() {
       auth !== undefined &&
       (auth.token === "null" || auth.token === "null" || auth.image === "null")
     ) {
-      navigate("/login");
+      navigate("/");
     }
   }, [auth]);
 

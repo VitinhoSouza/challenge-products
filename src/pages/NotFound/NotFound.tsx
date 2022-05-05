@@ -6,7 +6,7 @@ export default function () {
 
   useEffect(() => {
     setTimeout(() => {
-      navigate("/login");
+      navigate("/");
     }, 4000);
   });
   return (
