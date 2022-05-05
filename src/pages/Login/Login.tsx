@@ -29,9 +29,16 @@ export default function Login() {
   useEffect(() => {
     if (
       auth !== undefined &&
+      auth !== null &&
       auth.token !== "null" &&
-      auth.token !== "null" &&
-      auth.image !== "null"
+      auth.name !== "null" &&
+      auth.image !== "null" &&
+      auth.token !== null &&
+      auth.image !== null &&
+      auth.name !== null &&
+      auth.token !== undefined &&
+      auth.image !== undefined &&
+      auth.name !== undefined
     ) {
       navigate("/products");
     }
